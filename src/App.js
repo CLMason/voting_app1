@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+// import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    // this.myClick = this.myClick.bind(this);
+    this.state = {
+      libraries: [
+        {name:'React', votes:0},
+        {name:'Vue', votes:0},
+        {name: 'Angular', votes:0},
+        {name: 'Ember', votes:0}
+      ]
+    }
+  }
+  myClick(i)  {
+    console.log(i);
+    let temp = [...this.state.libraries];
+    temp[i].votes++;
+    this.setState ({libraries: temp});
+  }
+    render (){
+      return (
+        <>
+        <h1>Vote Your JS Library!</h1>
+        <table border="2" align="center" width="500px;" height="500px;">
+          <tbody>
+            <tr>
+              <th>JS Library Name</th>
+              <th># of Votes</th>
+              <th>Vote</th>
+            </tr>
+            {
+              this.state.libraries.map( (item, i) =>
+              <tr key = {i}>
+                <td>{item.name}</td>
+                <td>{item.votes}</td>
+                <td>
+                  <button onClick={this.myClick.bind(this, i)}>+</button>
+                </td>
+              </tr>)
+            }
+          </tbody>
+        </table>
+        </>
+      );
+    }
+  }
 
 export default App;
